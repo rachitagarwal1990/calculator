@@ -47,13 +47,13 @@ let createCalculatorButtons = function(buttonType, buttonText){
             numbers.appendChild(newButton);
             newButton.addEventListener("click", (e) => {
                 if(operator == ""){
-                    firstNumber = e.target.textContent;
+                    firstNumber += e.target.textContent;
+                    display.textContent = firstNumber;
                 }
                 else {
-                    secondNumber = e.target.textContent;
+                    secondNumber += e.target.textContent;
+                    display.textContent = secondNumber;
                 }
-                
-                display.textContent = e.target.textContent;
             })
             break;
         case "operators":
@@ -107,4 +107,4 @@ document.querySelector(".Clear").addEventListener("click", (e) => {
                 operator = "";                              
             })
 
-let a =1;
+let a =1; //placeholder to put debug statement
