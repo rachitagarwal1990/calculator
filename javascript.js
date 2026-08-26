@@ -15,7 +15,7 @@ let divide = function(a,b) {
         alert("Cannot divide by 0")
     }
     else{
-        return a/b;
+        return (a/b);
     }
 }
 
@@ -23,16 +23,12 @@ let operate = function(firstNumber, operator, secondNumber){
     switch(operator){
         case "+":
             return add(firstNumber, secondNumber);
-            break;
         case "-":
             return subtract(firstNumber, secondNumber);
-            break;
         case "x":
             return multiply(firstNumber, secondNumber);
-            break;
         case "/":
             return divide(firstNumber, secondNumber);
-            break;            
     }
 }
 
@@ -40,8 +36,6 @@ let createCalculatorButtons = function(buttonType, buttonText){
     let newButton = document.createElement("button");
     newButton.textContent = `${buttonText}`;
     newButton.classList.add(`${buttonText}`);
-    newButton.style.width = `${buttonSize}px`;
-    newButton.style.height = `${buttonSize/2}px`;
     switch(buttonType){
         case "numbers":
             numbers.appendChild(newButton);
@@ -59,9 +53,16 @@ let createCalculatorButtons = function(buttonType, buttonText){
         case "operators":
             operators.appendChild(newButton);
             newButton.addEventListener("click", (e) => {
-                if(firstNumber != ""){
+                if(firstNumber != "" && operator == ""){
                     operator = e.target.textContent;
                 }
+                else if(operator != "" && secondNumber != ""){
+                    firstNumber = operate(+firstNumber,operator,+secondNumber );
+                    secondNumber = "";
+                    display.textContent = firstNumber;
+                    operator = e.target.textContent;
+                }
+                
             })
             break;
         case "utilities":
@@ -95,16 +96,23 @@ allButtons.map(function(buttonGroup) {
 });
 
 document.querySelector(".Equals").addEventListener("click", (e) => {
-                display.textContent = secondNumber !== "" ?
-                                        operate(+firstNumber,operator,+secondNumber ):
-                                        ""
-            })
+    if(secondNumber !== "" ){
+        let calculatedResult = operate(+firstNumber,operator,+secondNumber );
+        display.textContent = Number.isInteger(calculatedResult) ? calculatedResult : calculatedResult.toFixed(15)   ;
+    }            
+    else {
+        display.textContent = "";
+    }
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";                                      
+})
 
 document.querySelector(".Clear").addEventListener("click", (e) => {
-                display.textContent = "";      
-                firstNumber = "";
-                secondNumber = "";
-                operator = "";                              
+    display.textContent = "";      
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";                              
             })
 
 let a =1; //placeholder to put debug statement

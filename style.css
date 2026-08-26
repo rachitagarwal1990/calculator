@@ -30,3 +30,8 @@ body {
     justify-content: center;
     flex-wrap: wrap;
 }
+
+button {
+    width: 60px;
+    height: 30px
+}
