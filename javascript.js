@@ -36,7 +36,7 @@ let operate = function(firstNumber, operator, secondNumber){
     }
 }
 
-let createCalculatorButton = function(buttonType, buttonText){
+let createCalculatorButtons = function(buttonType, buttonText){
     let newButton = document.createElement("button");
     newButton.textContent = `${buttonText}`;
     newButton.classList.add(`${buttonText}`);
@@ -46,12 +46,23 @@ let createCalculatorButton = function(buttonType, buttonText){
         case "numbers":
             numbers.appendChild(newButton);
             newButton.addEventListener("click", (e) => {
-                firstNumber = e.target.textContent;
+                if(operator == ""){
+                    firstNumber = e.target.textContent;
+                }
+                else {
+                    secondNumber = e.target.textContent;
+                }
+                
                 display.textContent = e.target.textContent;
             })
             break;
         case "operators":
             operators.appendChild(newButton);
+            newButton.addEventListener("click", (e) => {
+                if(firstNumber != ""){
+                    operator = e.target.textContent;
+                }
+            })
             break;
         case "utilities":
             utilities.appendChild(newButton);
@@ -70,18 +81,30 @@ const buttonSize = container.offsetWidth / 4;
 let allButtons = [
     {buttonType: "numbers",     buttonValues: [1,2,3,4,5,6,7,8,9,0] },
     {buttonType: "operators",   buttonValues: ["+","-","x","/"]     },
-    {buttonType: "utilities",   buttonValues: ["=","Clear"]         }
+    {buttonType: "utilities",   buttonValues: ["Equals","Clear"]         }
 ]
 
-let firstNumber;
-let operator;
-let secondNumber;
+let firstNumber = "";
+let operator = "";
+let secondNumber = "";
 
 allButtons.map(function(buttonGroup) {
     buttonGroup.buttonValues.map( button => 
-        createCalculatorButton(buttonGroup.buttonType, button )
+        createCalculatorButtons(buttonGroup.buttonType, button )
     )
 });
 
+document.querySelector(".Equals").addEventListener("click", (e) => {
+                display.textContent = secondNumber !== "" ?
+                                        operate(+firstNumber,operator,+secondNumber ):
+                                        ""
+            })
+
+document.querySelector(".Clear").addEventListener("click", (e) => {
+                display.textContent = "";      
+                firstNumber = "";
+                secondNumber = "";
+                operator = "";                              
+            })
 
 let a =1;
