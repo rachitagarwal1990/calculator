@@ -40,12 +40,16 @@ let createCalculatorButtons = function(buttonType, buttonText){
         case "numbers":
             numbers.appendChild(newButton);
             newButton.addEventListener("click", (e) => {
+                let content = e.target.textContent;
                 if(operator == ""){
-                    firstNumber += e.target.textContent;
-                    display.textContent = firstNumber;
+                    if(!(firstNumber.includes(".") && content == ".")){
+                        firstNumber += content;
+                        display.textContent = firstNumber;
+                    }
                 }
                 else {
-                    secondNumber += e.target.textContent;
+                    if(!(secondNumber.includes(".") && content == "."))
+                    secondNumber += content;
                     display.textContent = secondNumber;
                 }
             })
@@ -80,7 +84,7 @@ const display   = document.querySelector(".display");
 const buttonSize = container.offsetWidth / 4;
 
 let allButtons = [
-    {buttonType: "numbers",     buttonValues: [1,2,3,4,5,6,7,8,9,0] },
+    {buttonType: "numbers",     buttonValues: [1,2,3,4,5,6,7,8,9,0,"."] },
     {buttonType: "operators",   buttonValues: ["+","-","x","/"]     },
     {buttonType: "utilities",   buttonValues: ["Equals","Clear"]         }
 ]
@@ -114,5 +118,3 @@ document.querySelector(".Clear").addEventListener("click", (e) => {
     secondNumber = "";
     operator = "";                              
             })
-
-let a =1; //placeholder to put debug statement
