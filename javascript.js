@@ -102,7 +102,7 @@ allButtons.map(function(buttonGroup) {
 document.querySelector(".Equals").addEventListener("click", (e) => {
     if(secondNumber !== "" ){
         let calculatedResult = operate(+firstNumber,operator,+secondNumber );
-        display.textContent = Number.isInteger(calculatedResult) ? calculatedResult : calculatedResult.toFixed(15)   ;
+        display.textContent = Number.isInteger(calculatedResult) ? calculatedResult : +calculatedResult.toFixed(15)   ;
     }            
     else {
         display.textContent = "";
